@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>expressTrace</display-name>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>MakePoint</servlet-name>
+    <servlet-class>controller.MakePoint</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>GetPoint</servlet-name>
+    <servlet-class>controller.GetPoint</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>MakePoint2</servlet-name>
+    <servlet-class>controller.MakePoint2</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>Temp</servlet-name>
+    <servlet-class>controller.Temp</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>getPoint2</servlet-name>
+    <servlet-class>controller.getPoint2</servlet-class>
+  </servlet>
+  <servlet>
+    <description>用来表示处理address数据导入数据库</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>AddressDo</servlet-name>
+    <servlet-class>controller.AddressDo</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>This is the display name of my J2EE component</display-name>
+    <servlet-name>fromTimeToTime</servlet-name>
+    <servlet-class>controller.fromTimeToTime</servlet-class>
+  </servlet>
+  <servlet>
+    <description>This is the description of my J2EE component</description>
+    <display-name>根据时间来返回数据</display-name>
+    <servlet-name>selectByTime</servlet-name>
+    <servlet-class>controller.selectByTime</servlet-class>
+  </servlet>
+
+
+
+
+
+
+
+
+  <servlet-mapping>
+    <servlet-name>MakePoint</servlet-name>
+    <url-pattern>/point.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>GetPoint</servlet-name>
+    <url-pattern>/getPoint.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MakePoint2</servlet-name>
+    <url-pattern>/makepoint2.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Temp</servlet-name>
+    <url-pattern>/temp.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>getPoint2</servlet-name>
+    <url-pattern>/getPoint2.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AddressDo</servlet-name>
+    <url-pattern>/address.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>fromTimeToTime</servlet-name>
+    <url-pattern>/fromTimeToTime.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>selectByTime</servlet-name>
+    <url-pattern>/selectByTime</url-pattern>
+  </servlet-mapping>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+</web-app>

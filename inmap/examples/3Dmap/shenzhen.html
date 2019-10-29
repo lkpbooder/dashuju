@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=EDGE">
+  <title>3D深圳</title>
+  <script src="./dist/echarts.min.js"></script>
+  <script src="./dist/echarts-gl.js"></script>
+  <script src="./dist/jquery.min.js"></script>
+  <script src="./dist/sz.js"></script>
+
+</head>
+<body>
+<!--<div class="box" style="height: 650px;width: 100%"></div>-->
+<div id='main'></div>
+
+<canvas id="canv" width="1920" height="572"></canvas>
+<script src="./bg.js"></script>
+<style>
+  html {
+    height: 100%;
+    background-image: -webkit-radial-gradient(ellipse farthest-corner at center center, #1b44e4 0%, #020f3a 100%);
+    background-image: radial-gradient(ellipse farthest-corner at center center, #1b44e4 0%, #020f3a 100%);
+    cursor: move;
+  }
+
+  body {
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    background:url('bg.png')
+  }
+  #main {width:1300px; height: 600px;margin: auto;position: absolute;left: 0;top: 0;}
+  .box{ background:url('bg.png'); background-size:cover; }
+
+</style>
+<script>
+  let geoCoordMap = {
+    "深圳": [114.07, 22.62],
+    "罗湖区": [114.15365, 22.569561],
+    "福田区": [114.053134, 22.543838],
+    "南山区": [113.97441, 22.568771],
+    "盐田区": [114.292525, 22.606567],
+    "坪山区": [114.375248, 22.687244],
+    "宝安区": [113.862424, 22.666302],
+    "龙华区": [114.039535, 22.68556],
+    "光明区": [113.956823, 22.758294],
+    "大鹏区": [114.482015, 22.605026],
+    "龙岗区": [114.297589, 22.737808],
+    "南头街道": [113.928713, 22.553116],
+    "南山街道": [113.91204, 22.521337],
+    "沙河街道": [113.986348, 22.545639],
+    "蛇口街道": [113.942654, 22.498901],
+    "招商街道": [113.907297, 22.489818],
+    "粤海街道": [113.952284, 22.542168],
+    "桃源街道": [113.995403, 22.59076],
+    "西丽街道": [113.958149, 22.612814],
+
+  };
+
+  var convertData = function(data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+      var geoCoord = geoCoordMap[data[i].name];
+      if (geoCoord) {
+        res.push({
+          name: data[i].name,
+          value: geoCoord.concat(data[i].value)
+        });
+      }
+    }
+    console.log(res)
+    return res;
+  };
+
+  option = {
+    backgroundColor: 'rgba(0,0,0,0)',//canvas的背景颜色
+    title: {
+      text: '测试bar3D、scatter3D、geo3D',
+      x: 'left',
+      top: "10",
+      textStyle: {
+        color: '#000',
+        fontSize: 14
+      }
+    },
+    tooltip: {
+      show: true,
+      // formatter:(params)=>{
+      //   let data = "测试1:"+params.name + "<br/>"+"值:"+ params.value[2]+"<br/>"+"地理坐标:[" + params.value[0]+","+params.value[1] +"]";
+      //   return data;
+      // },
+    },
+    visualMap: [{
+      type: 'continuous',
+      seriesIndex: 0,
+      text: ['bar3D'],
+      calculable: true,
+      max: 500,
+      inRange: {
+        color: ['green', '#eba438', '#d94d4c']
+      }
+    }, {
+      type: 'continuous',
+      seriesIndex: 1,
+      text: ['scatter3D'],
+      left: 'right',
+      max: 100,
+      calculable: true,
+      inRange: {
+        color: ['#000', 'blue', 'purple']
+      }
+    }],
+    geo3D: {
+      map: 'china',
+      roam: true,
+      itemStyle: {
+        color: '#1d5e98',
+        opacity: 1,
+        borderWidth: 0.4,
+        borderColor: '#000'
+      },
+      label: {
+        show: true,
+        textStyle: {
+          color: '#000047', //地图初始化区域字体颜色
+          fontSize: 12,
+          opacity: 1,
+          backgroundColor: 'rgba(0,23,11,0)'
+        },
+      },
+      emphasis: { //当鼠标放上去  地区区域是否显示名称
+        label: {
+          show: true,
+          textStyle: {
+            color: '#fff',
+            fontSize: 12,
+            backgroundColor: 'rgba(0,23,11,0)'
+          }
+        }
+      },
+      //shading: 'lambert',
+      light: { //光照阴影
+        main: {
+          color: '#fff', //光照颜色
+          intensity: 1.2, //光照强度
+          //shadowQuality: 'high', //阴影亮度
+          shadow: false, //是否显示阴影
+          alpha:55,
+          beta:10
+
+        },
+        ambient: {
+          intensity: 0.3
+        }
+      }
+    },
+    series: [{
+      name: 'bar3D',
+      type: "bar3D",
+      coordinateSystem: 'geo3D',
+      barSize: 0.9, //柱子粗细
+      shading: 'lambert',
+      opacity: 1,
+      bevelSize:1,
+      label: {
+        show: false,
+        formatter: '{b}'
+      },
+
+      data: convertData([
+        {
+        name: "罗湖区",
+        value: (Math.random() * 300+100).toFixed(2)
+      },
+        {
+          name: "南山区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "宝安区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "光明区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "龙华区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "龙岗区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "盐田区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "大鹏区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "坪山区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "大鹏区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "福田区",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "南头街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "南山街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "沙河街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "蛇口街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "招商街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name:"粤海街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "桃源街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+        {
+          name: "西丽街道",
+          value: (Math.random() * 300+100).toFixed(2)
+        },
+      ]),
+    }, {
+      name: 'scatter3D',
+      show:false,
+      type: "scatter3D",
+      coordinateSystem: 'geo3D',
+      symbol: 'pin',
+      symbolSize: 20,
+      opacity: 1,
+      label: {
+        show: false,
+        formatter: '{b}'
+      },
+      itemStyle: {
+        borderWidth: 0.5,
+        borderColor: '#fff'
+      },
+      data: convertData([
+       /* {
+        name: "福田区",
+        value: ((Math.random() * 100) + 50).toFixed(2)
+      },*/
+      ])
+    }]
+  }
+  echarts.init(document.getElementById('main')).setOption(option);
+</script>
+</body>
+</html>

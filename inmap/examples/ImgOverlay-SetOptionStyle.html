@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>ImgOverlay</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        body,
+        html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            font-family: "微软雅黑";
+        }
+
+        #allmap {
+            width: 100%;
+            height: 100%;
+        }
+
+        p {
+            margin-left: 5px;
+            font-size: 14px;
+        }
+    </style>
+
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=U3q69k0Dv0GCYNiiZeHPf7BS"></script>
+    <script src="../dist/inmap.js"></script>
+    <script src="data/data2.js"></script>
+</head>
+
+<body>
+    <div id="allmap"></div>
+</body>
+
+</html>
+<script>
+    data.length = 50;
+    var map = new inMap.Map({
+        id: 'allmap',
+        center: [105.403119, 38.028658],
+        zoom: {
+            value: 5,
+            show: true,
+            max: 18,
+            min: 5
+        },
+    })
+    var img = "./img/bso.svg";
+    var img2 = "./img/mark (2).png";
+    var img3 = "./img/place.svg";
+
+    var overlay = new inMap.ImgOverlay({
+        tooltip: {
+            show: true,
+            formatter: function (params) {
+                return params.count;
+            }
+        },
+        style: {
+            normal: {
+                icon: img,
+                width: 40,
+                height: 40,
+                offsets: {
+                    top: "-100%",
+                    left: "-50%",
+                },
+
+            },
+            mouseOver: {
+                
+            },
+            splitList: [
+                { //设置区间颜色
+                    start: 0,
+                    end: 2,
+                    icon: img3,
+                },
+                {
+                    start: 2,
+                    end: 5,
+                    icon: img2,
+                    
+                },
+                {
+                    start: 5,
+                    end: 7,
+                    icon: img,
+                },
+                {
+                    start: 7,
+                    icon: img,
+                }
+            ],
+        },
+        event: {
+            onMouseClick: function (item) {
+                //能获取当前点的信息
+                console.log(item,11111);
+            },
+            onMouseOver:function(item,event,overlay){
+                // console.log(item,event,overlay);
+            },
+            onState(state) {
+                console.log(state);
+            }
+        },
+        data: data
+    });
+    map.add(overlay);
+
+    setTimeout(() => {
+        overlay.setOptionStyle({
+            skin: "Blueness",
+            tooltip: {
+                show: true,
+                formatter: function (params) {
+                    return params.count;
+                }
+            },
+            style: {
+                normal: {
+                    icon: img,
+                    width: 40,
+                    height: 40,
+                    offsets: {
+                        top: "-100%",
+                        left: "-50%",
+                    }
+                }
+            }
+        });
+    }, 2000);
+</script>
